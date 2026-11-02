@@ -1,0 +1,124 @@
+.page { padding: var(--gap); }
+
+/* Hero — each section wears its own surface */
+.hero {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: clamp(380px, 56vh, 560px);
+  padding: clamp(20px, 3vw, 40px);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  color: var(--on);
+  isolation: isolate;
+}
+
+.heroMeta { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; opacity: 0.75; }
+.title {
+  margin-top: auto;
+  padding-top: 40px;
+  font-size: clamp(3.2rem, 11vw, 10rem);
+  line-height: 0.86;
+  letter-spacing: -0.055em;
+}
+/* Long names (Written Communication) step down so the longest word still fits */
+.title[data-long] { font-size: clamp(2.6rem, 7.2vw, 7.4rem); }
+
+.lede { max-width: 40ch; margin-top: 18px; font-size: var(--step-1); line-height: 1.35; }
+.toc ul { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+.toc a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.toc a span { opacity: 0.65; font-size: var(--text-xs); }
+.toc a:hover { background: var(--on); color: var(--surface); }
+.heroIcon {
+  position: absolute;
+  right: clamp(-40px, -2vw, 0px);
+  top: clamp(40px, 6vw, 70px);
+  z-index: -1;
+  width: clamp(140px, 24vw, 320px);
+  height: auto;
+  opacity: 0.16;
+}
+
+/* Content blocks */
+.blocks { display: grid; }
+.block {
+  display: grid;
+  grid-template-columns: minmax(220px, 340px) 1fr;
+  gap: 24px clamp(20px, 4vw, 64px);
+  padding: clamp(40px, 6vw, 80px) clamp(8px, 2vw, 28px);
+  border-bottom: 1px solid var(--line);
+  scroll-margin-top: 12px;
+}
+.blockHead { align-self: start; position: sticky; top: 24px; }
+.blockNum { font-family: var(--font-mono); font-size: 0.75rem; color: var(--page-accent); }
+.blockHead h2 { margin-top: 8px; font-size: var(--step-3); }
+/* Section copy sits under the heading, filling the left column */
+.blockIntro {
+  margin-top: 16px;
+  max-width: 36ch;
+  color: var(--text-2);
+  font-size: var(--step-0);
+  line-height: 1.55;
+}
+.blockNotes {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+  padding-left: 1.1em;
+  max-width: 36ch;
+  color: var(--text-2);
+  font-size: var(--step-0);
+  line-height: 1.5;
+}
+.blockNotes li::marker { color: var(--page-accent); }
+.blockIntro :global(strong), .blockNotes :global(strong) { color: var(--text); font-weight: 600; }
+.blockIntro :global(code) { font-family: var(--font-mono); font-size: 0.9em; color: var(--text); }
+.blockNotes :global(a), .blockIntro :global(a) { color: var(--page-accent); text-decoration: underline; text-underline-offset: 3px; word-break: break-word; }
+.blockBody { min-width: 0; }
+
+/* Pager */
+.pager { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); margin-top: var(--gap); }
+.pagerLink {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: clamp(18px, 2.4vw, 30px);
+  min-height: 150px;
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  color: var(--on);
+}
+
+.pagerNext { text-align: right; }
+.pagerTitle { margin-top: auto; font-family: var(--font-display); font-weight: 700; font-size: var(--step-3); letter-spacing: -0.04em; line-height: 1; }
+
+@media (max-width: 899px) {
+  .block { grid-template-columns: 1fr; }
+  .blockHead { position: static; }
+}
+@media (max-width: 767px) {
+  .page { padding: 8px; }
+  .hero { min-height: 420px; }
+  .pager { grid-template-columns: 1fr; }
+}
+
+.blockImg { display: block; width: 100%; max-width: 360px; height: auto; margin-top: 18px; border-radius: var(--radius-lg); }
+
+/* Pages with a sticky section bar: leave room for it when jumping and for sticky headings */
+.page[data-sticky-nav] { --secnav-h: 58px; }
+.page[data-sticky-nav] .block { scroll-margin-top: calc(var(--secnav-h) + 8px); }
+.page[data-sticky-nav] .blockHead { top: calc(var(--secnav-h) + 24px); }
+@media (max-width: 767px) {
+  .page[data-sticky-nav] .block { scroll-margin-top: calc(var(--topbar-h) + var(--secnav-h) + 8px); }
+}

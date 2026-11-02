@@ -1,0 +1,21 @@
+{
+  "name": "brand-kit-template",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "npm run kit && next dev",
+    "build": "npm run kit && next build",
+    "start": "next start",
+    "lint": "next lint",
+    "kit": "node scripts/build-brand-kit.mjs",
+    "icons": "node scripts/build-icons.mjs"
+  },
+  "dependencies": {
+    "next": "16.4.3",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "type": "module",
+  "license": "MIT",
+  "description": "An interactive, config-driven brand guidelines site. Edit brand.config.js and deploy."
+}

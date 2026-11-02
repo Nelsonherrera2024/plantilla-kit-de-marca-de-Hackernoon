@@ -1,0 +1,74 @@
+/* Imagery page. Accent follows the page (cyan on Imagery). */
+.stack { display: grid; gap: 14px; min-width: 0; }
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text);
+}
+.chip:hover { border-color: var(--page-accent); }
+.chip[aria-pressed='true'] { background: var(--page-accent); border-color: var(--page-accent); color: var(--page-accent-ink); }
+.bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.count { margin-right: auto; color: var(--text-2); }
+.count b { color: var(--page-accent); font-family: var(--font-display); font-size: var(--step-1); }
+.fine { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-3); }
+
+/* ---------- Policy ---------- */
+.policy {
+  display: grid;
+  gap: 18px;
+  margin: 0;
+  padding: clamp(24px, 5vw, 48px);
+  border-radius: var(--radius-lg);
+  background: #000;
+  border: 1px solid var(--line);
+}
+.policyLabel { font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.1em; color: var(--page-accent); }
+.policyQuote {
+  margin: 0;
+  font-family: var(--font-pixel);
+  font-size: clamp(1.8rem, 1rem + 3.4vw, 3.6rem);
+  line-height: 1.08;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.word {
+  display: inline-block;
+  padding: 0 0.08em;
+  border-radius: 0.12em;
+}
+.word:hover { background: var(--page-accent); color: var(--page-accent-ink); }
+
+.policyNote { max-width: 60ch; color: var(--text-2); }
+
+/* ---------- Treatments ---------- */
+.lab { display: grid; gap: 12px; }
+.labStage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: #000;
+  border: 1px dashed var(--line-strong);
+}
+.labStage[data-drag] { border-color: var(--page-accent); }
+.labStage canvas { width: 100%; height: 100%; object-fit: contain; image-rendering: pixelated; }
+.labDrop { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); }
+.labFile { position: absolute; width: 1px; height: 1px; opacity: 0; }
+
+/* ---------- Do's and don'ts ---------- */
+.dd { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--gap); }
+.ddCol { display: grid; gap: 10px; align-content: start; padding: 20px; border-radius: var(--radius-lg); background: #000; border: 1px solid var(--line); }
+.ddCol h3 { font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.1em; color: var(--page-accent); }
+.ddCol[data-kind='dont'] h3 { color: var(--text-2); }
+.ddCol ul { display: grid; gap: 8px; padding: 0; list-style: none; }
+.ddCol li { display: grid; grid-template-columns: 20px 1fr; gap: 6px; }

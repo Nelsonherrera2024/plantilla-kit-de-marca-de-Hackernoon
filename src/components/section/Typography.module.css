@@ -1,0 +1,19 @@
+.font { display: grid; gap: 16px; }
+.weights, .scale { display: grid; margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+.weights li, .scale li {
+  display: grid;
+  grid-template-columns: 160px minmax(0, 1fr);
+  align-items: baseline;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+.weightLabel { font-size: var(--text-xs); color: var(--text-3); }
+.weightLabel code { display: block; margin-top: 2px; font-family: var(--font-mono); color: var(--text-2); }
+.sample { font-size: var(--step-2); line-height: 1.2; color: var(--text); }
+.scaleSample { line-height: 1.05; letter-spacing: -0.02em; color: var(--text); overflow-wrap: anywhere; }
+.link { justify-self: start; color: var(--page-accent); font-weight: 600; }
+
+@media (max-width: 640px) {
+  .weights li, .scale li { grid-template-columns: 1fr; gap: 6px; }
+}

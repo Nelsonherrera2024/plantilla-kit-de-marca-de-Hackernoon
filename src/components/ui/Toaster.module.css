@@ -1,0 +1,21 @@
+.region {
+  position: fixed;
+  left: 50%;
+  bottom: calc(20px + env(safe-area-inset-bottom));
+  z-index: 80;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.toast {
+  padding: 10px 16px;
+  background: #000;
+  color: var(--brand-accent);
+  border: 1px solid var(--brand-accent);
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  white-space: nowrap;
+  box-shadow: 4px 4px 0 var(--brand-accent);
+}
+.prompt { opacity: 0.6; }
+

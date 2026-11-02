@@ -1,0 +1,77 @@
+.tile {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  color: var(--on);
+  container: tile / inline-size;
+}
+
+.tile:has(.link:focus-visible) {
+  outline: 3px solid var(--brand-accent);
+  outline-offset: 3px;
+}
+:global(.theme-accent).tile:has(.link:focus-visible) { outline-color: #fff; }
+
+.head {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 20px 0;
+}
+
+.title {
+  font-size: clamp(1.25rem, 1rem + 0.9vw, 1.9rem);
+  letter-spacing: -0.03em;
+}
+
+.link { outline: none; }
+.link::after {
+  content: '';
+  position: absolute;
+  inset: calc(-1 * 999px);
+  z-index: 1;
+}
+/* (the tile's overflow:hidden constrains the stretched link) */
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  opacity: 0.8;
+}
+.arrow {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+}
+
+.body {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Interactive children float above the stretched link */
+.tile :global(.tile-control) { position: relative; z-index: 2; }
+
+@container tile (max-width: 260px) {
+  .head { padding: 14px 14px 0; }
+  .title { font-size: 1.1rem; }
+  .meta > span:first-child { display: none; }
+  .arrow { width: 28px; height: 28px; }
+}

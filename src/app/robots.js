@@ -1,0 +1,9 @@
+import brand from '@/data/brand';
+
+export default function robots() {
+  return {
+    rules: { userAgent: '*', allow: '/' },
+    sitemap: `${brand.siteUrl}/sitemap.xml`,
+    host: brand.siteUrl,
+  };
+}

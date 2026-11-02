@@ -1,0 +1,163 @@
+/* ==========================================================================
+   Brand kit — design tokens
+   Brand colours come from brand.config.js (injected in src/app/layout.js);
+   palettes live in src/data/colors.js. These are the site's UI tokens.
+   ========================================================================== */
+
+@property --nav-w {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: 252px;
+}
+
+:root {
+  /* Brand palette. --brand-accent, --brand-accent-ink, --brand-bg, --brand-charcoal
+     and --brand-paper are overridden from brand.config.js at runtime. */
+  --brand-accent: #ffd400;
+  --brand-accent-ink: #000;
+  --brand-accent-dim: color-mix(in srgb, var(--brand-accent) 75%, #000);
+  --brand-bg: #0b0b0c;
+  --brand-yellow: #f5ec43;
+  --brand-paper: #f3f0e6;
+  --brand-rust: #ff5a1f;
+  --brand-cobalt: #2e4bff;
+  --brand-lavender: #c6b7ff;
+  --brand-moss: #0e3b1e;
+  --brand-pink: #ff7ac6;
+  --brand-graphite: #1b1b1f;
+  --brand-charcoal: #2b2b2e;
+
+  /* Interface neutrals */
+  --bg: var(--brand-bg);
+  --bg-2: #121214;
+  --bg-3: #1a1a1e;
+  --line: #2a2a31;
+  --line-strong: #3a3a44;
+  --text: #f2f2f0;
+  --text-2: #a7a7ad;
+  --text-3: #6d6d75;
+
+  /* Type */
+  /* One typeface everywhere: Inter (loaded in src/app/layout.js). The role
+     tokens below all point at it; give any of them its own font if you like. */
+  --font-inter: var(--ff-inter), 'Inter', system-ui, sans-serif;
+  --font-display: var(--font-inter);
+  --font-body: var(--font-inter);
+  --font-mono: var(--font-inter);
+  --font-pixel: var(--font-inter);
+  --font-plex-sans: var(--font-inter);
+
+  /* Readability floor: nothing on the site renders below 12px */
+  --text-xs: 0.75rem; /* 12px */
+  --step--1: clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem); /* 13–14px */
+  --step-0: clamp(1rem, 0.96rem + 0.15vw, 1.0625rem);
+  --step-1: clamp(1.15rem, 1.08rem + 0.35vw, 1.35rem);
+  --step-2: clamp(1.4rem, 1.25rem + 0.7vw, 1.9rem);
+  --step-3: clamp(1.9rem, 1.55rem + 1.6vw, 3rem);
+  --step-4: clamp(2.6rem, 1.9rem + 3.2vw, 5rem);
+  --step-5: clamp(3.4rem, 2.2rem + 6vw, 8.5rem);
+
+  /* Space / shape */
+  --gap: 12px;
+  --radius: 6px;
+  --radius-lg: 14px;
+  --pad: clamp(16px, 2.4vw, 32px);
+
+  /* Navigation */
+  --nav-rail: 76px;
+  --nav-standard: 252px;
+  --nav-expanded: 288px;
+  --topbar-h: 56px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-snap: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-1: 120ms;
+  --dur-2: 220ms;
+  --dur-3: 360ms;
+
+  color-scheme: dark;
+  --nav-w: var(--nav-standard);
+}
+
+html[data-nav='rail'] { --nav-w: var(--nav-rail); }
+html[data-nav='standard'] { --nav-w: var(--nav-standard); }
+html[data-nav='expanded'] { --nav-w: var(--nav-expanded); }
+
+/* Surface themes — every section gets its own world */
+.theme-ink      { --surface: var(--brand-charcoal); --on: var(--text); --accent: var(--brand-accent); --muted: var(--text-2); --pop: var(--brand-accent); }
+.theme-accent   { --surface: var(--brand-accent); --on: var(--brand-accent-ink); --accent: var(--brand-accent-ink); --muted: color-mix(in srgb, var(--brand-accent-ink) 65%, var(--brand-accent)); --pop: var(--brand-accent); }
+.theme-terminal { --surface: #000; --on: var(--brand-accent); --accent: var(--brand-accent); --muted: var(--brand-accent-dim); }
+
+/* Homepage tiles: one dark surface for every tile, the theme's --pop colour for text.
+   Change --tile-mono-bg to retint them all. */
+/* Page accent: section pages use the same colour as their nav icon and homepage tile
+   (the theme's --pop). Per-theme rules are generated from brand.config.js
+   (see themeCss in src/data/brand.js); the brand accent everywhere else. */
+:root { --page-accent: var(--brand-accent); --page-accent-ink: var(--brand-accent-ink); }
+
+:root { --tile-mono-bg: #222221; }
+.tile-mono {
+  --surface: var(--tile-mono-bg);
+  --on: var(--pop, var(--brand-accent));
+  --accent: var(--pop, var(--brand-accent));
+  --muted: color-mix(in srgb, var(--pop, var(--brand-accent)) 70%, transparent);
+}
+
+/* ==========================================================================
+   Reset
+   ========================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 24px; }
+body {
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img, svg, video, canvas { display: block; max-width: 100%; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; background: none; border: 0; padding: 0; }
+a { color: inherit; text-decoration: none; }
+:where(ul[role='list'], ol[role='list']) { list-style: none; padding: 0; }
+h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.02; letter-spacing: -0.02em; font-weight: 700; text-wrap: balance; }
+p { text-wrap: pretty; }
+::selection { background: var(--page-accent); color: var(--page-accent-ink); }
+
+:focus-visible {
+  outline: 2px solid var(--page-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+.theme-accent :focus-visible { outline-color: var(--brand-accent-ink); }
+
+/* ==========================================================================
+   Utilities
+   ========================================================================== */
+.visually-hidden {
+  position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+.mono { font-family: var(--font-mono); }
+.pixel { font-family: var(--font-pixel); letter-spacing: 0; }
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.skip-link {
+  position: fixed; left: 12px; top: -60px; z-index: 100;
+  background: var(--brand-accent); color: var(--brand-accent-ink); padding: 10px 14px;
+  font-family: var(--font-mono); font-weight: 600; border-radius: var(--radius);
+}
+.skip-link:focus { top: 12px; }
+
+
+[tabindex="-1"]:focus { outline: none; }

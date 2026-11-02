@@ -1,0 +1,3 @@
+.logo { display: block; overflow: visible; height: auto; }
+.ink { fill: var(--logo-ink); }
+.face { fill: var(--logo-face); }

@@ -1,0 +1,294 @@
+/* --------------------------------------------------------------------------
+   Navigation rail — 3 states driven by html[data-nav] + animated --nav-w
+   rail (76px) → standard (240px) → expanded (288px + sub-page tree)
+   -------------------------------------------------------------------------- */
+
+.nav {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 40;
+  width: var(--nav-w);
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: #070708;
+  border-right: 1px solid var(--line);
+  overflow: hidden;
+}
+
+/* Elements that only exist beyond the rail state fade + slide */
+.label,
+.wordmark,
+.num {
+  white-space: nowrap;
+}
+:global(html[data-nav='rail']) .label,
+:global(html[data-nav='rail']) .wordmark,
+:global(html[data-nav='rail']) .num {
+  opacity: 0;
+  transform: translateX(-8px);
+  pointer-events: none;
+}
+
+/* ---------- Head / brand ---------- */
+.head {
+  height: 68px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  border-radius: 10px;
+}
+.mark {
+  flex: 0 0 52px;
+  display: grid;
+  place-items: center;
+  color: var(--brand-accent);
+}
+.mark svg { width: 26px; }
+.wordmarkSvg { width: 100px; flex: none; }
+.wordmark {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.brandTag {
+  font-family: var(--font-pixel);
+  font-size: var(--text-xs);
+  font-weight: 400;
+  letter-spacing: 0;
+  background: var(--brand-accent);
+  color: #000;
+  padding: 2px 5px 1px;
+  border-radius: 3px;
+}
+
+/* ---------- State toggle ---------- */
+.toggle {
+  flex: none;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  margin: 0 12px 10px;
+  border: 1px dashed var(--line-strong);
+  border-radius: 10px;
+  color: var(--text-2);
+  text-align: left;
+}
+.toggle:hover { color: var(--text); border-color: var(--brand-accent); background: color-mix(in srgb, var(--page-accent) 4%, transparent); }
+.toggleIcon {
+  flex: 0 0 50px;
+  display: grid;
+  place-items: center;
+}
+.toggleIcon[data-mode='expanded'] { transform: scaleX(-1); }
+.toggle .label {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.dots { display: flex; gap: 4px; }
+.dots i {
+  width: 6px;
+  height: 6px;
+  background: var(--line-strong);
+}
+.dots i[data-on='true'] { background: var(--brand-accent); }
+
+/* ---------- Main list ---------- */
+.list {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 2px 0 12px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
+
+.row { position: relative; }
+
+.item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 44px;
+  margin: 2px 12px;
+  border-radius: 10px;
+  color: var(--text-2);
+  font-weight: 500;
+}
+.item:hover { color: var(--text); background: var(--bg-2); }
+
+.icon {
+  flex: 0 0 52px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+}
+/* Hover: the section's grey theme. Current page: the brand accent. */
+.item:hover .icon {
+  background: var(--surface);
+  color: var(--on);
+}
+.item[aria-current] .icon {
+  background: var(--brand-accent);
+  color: var(--brand-accent-ink);
+}
+
+.label { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; padding-left: 12px; }
+
+.num {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-3);
+  padding-right: 12px;
+}
+:global(html[data-nav='expanded']) .num { opacity: 0; }
+
+.item[aria-current] { color: var(--text); background: var(--bg-3); }
+.item[aria-current]::before {
+  content: '';
+  position: absolute;
+  left: -12px;
+  top: 50%;
+  width: 4px;
+  height: 20px;
+  margin-top: -10px;
+  background: var(--brand-accent);
+}
+
+/* ---------- Disclosure + sub-tree (expanded state only) ---------- */
+.disclose {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  width: 28px;
+  height: 28px;
+  margin-top: -14px;
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+  color: var(--text-3);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.group[data-open='true'] .disclose svg { transform: rotate(180deg); }
+.disclose:hover { color: var(--text); background: var(--bg-3); }
+:global(html[data-nav='expanded']) .disclose { opacity: 1; pointer-events: auto; }
+
+.subWrap {
+  display: grid;
+  grid-template-rows: 0fr;
+}
+.subWrap[data-visible='true'] { grid-template-rows: 1fr; }
+.subWrap > ul { min-height: 0; overflow: hidden; }
+/* spacing lives on items so the collapsed (0fr) row is truly 0px tall */
+.sub li:first-child { padding-top: 2px; }
+.sub li:last-child { padding-bottom: 8px; }
+
+.sub {
+  margin: 0 12px 0 38px;
+  border-left: 1px dashed var(--line-strong);
+}
+
+.subItem {
+  display: block;
+  margin-left: -1px;
+  padding: 6px 12px 6px 25px;
+  border-left: 2px solid transparent;
+  font-size: 0.88rem;
+  color: var(--text-3);
+  white-space: nowrap;
+  border-radius: 0 6px 6px 0;
+}
+.subItem:hover { color: var(--text); background: var(--bg-2); }
+.subItem[aria-current] { color: var(--brand-accent); border-left-color: var(--brand-accent); }
+
+/* ---------- Foot ---------- */
+.foot {
+  flex: none;
+  padding: 12px 24px 16px;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-3);
+  border-top: 1px solid var(--line);
+}
+.foot .label { padding-left: 0; }
+.foot kbd {
+  display: inline-block;
+  min-width: 18px;
+  margin-right: 3px;
+  padding: 0 4px;
+  border: 1px solid var(--line-strong);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  text-align: center;
+  color: var(--text-2);
+  font-family: inherit;
+}
+
+/* ---------- Rail tooltip ---------- */
+.tip {
+  position: fixed;
+  left: calc(var(--nav-rail) + 4px);
+  z-index: 60;
+  transform: translateY(-50%);
+  padding: 6px 10px;
+  background: var(--surface, var(--brand-accent));
+  color: var(--on, #000);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: pre;
+  border-radius: 4px;
+  pointer-events: none;
+}
+.tip::before {
+  content: '';
+  position: absolute;
+  left: -4px;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  margin-top: -4px;
+  background: inherit;
+  transform: rotate(45deg);
+}
+
+/* ---------- Tablet: overlay instead of push ---------- */
+.scrim { display: none; }
+
+@media (min-width: 768px) and (max-width: 1199px) {
+  :global(html:not([data-nav='rail'])) .nav { box-shadow: 24px 0 60px rgba(0, 0, 0, 0.6); }
+  .scrim {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 35;
+    background: rgba(0, 0, 0, 0.55);
+    opacity: 0;
+    pointer-events: none;
+  }
+  .scrim[data-show='true'] { opacity: 1; pointer-events: auto; }
+}
+
+@media (max-width: 767px) {
+  .nav, .scrim { display: none; }
+}
