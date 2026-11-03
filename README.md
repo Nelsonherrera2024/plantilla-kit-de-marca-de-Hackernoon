@@ -2,6 +2,8 @@
 
 An open-source brand guidelines site. Fill in one config file and deploy, and you get a brand kit people actually enjoy using: a bento-style home board, a collapsible nav rail, a logo playground with SVG export, colour palettes in shades, type specimens, image treatments and a downloadable kit.
 
+**Live demo:** [brand-kit-template.preview.hackernoon.com](https://brand-kit-template.preview.hackernoon.com)
+
 Everything you see is placeholder content for a made-up brand called **Your Brand**. Swap in your own.
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/hackernoon/brand-kit-template)

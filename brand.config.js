@@ -13,7 +13,7 @@ const config = {
   // ── Identity ───────────────────────────────────────────────────────────────
   name: 'Your Brand', // shown in the nav, footer, titles and generated wordmark
   kitName: 'Your Brand Kit',
-  siteUrl: 'https://brand.example.com', // used for metadata, sitemap and robots.txt
+  siteUrl: 'https://brand-kit-template.preview.hackernoon.com', // your site's URL: used for metadata, sitemap and robots.txt
   homepage: 'https://example.com', // your main website
   description:
     'Your Brand Kit: logos, colours, typography, imagery and downloads, all in one interactive guide.',
