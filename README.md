@@ -91,4 +91,4 @@ Code: [MIT](LICENSE). Inter: SIL Open Font License. Placeholder content: use it 
 
 ---
 
-Originally built by [HackerNoon](https://hackernoon.com) for its own brand kit, then open-sourced as a template.
+Originally built by [HackerNoon](https://hackernoon.com) for its own [brand & media kit]([url](https://brand.hackernoon.com/)), then open-sourced as a template here. 
